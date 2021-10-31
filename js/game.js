@@ -54,6 +54,12 @@ function start() {
 
     lastStingTime = new Date();
 
+    if (score >= 100){
+        while(True) {
+        bees.pop();
+        }
+    }
+
 
     
 }
@@ -160,16 +166,15 @@ function makeBees() {
     let nbBees = document.getElementById("nbBees").value;
     nbBees = Number(nbBees); //try converting the content of the input to a number
     if (isNaN(nbBees)) { //check that the input field contains a valid number
-    window.alert("Invalid number of bees");
-    return;
+    alert("Invalid number of bees");
     }
     //create bees
     let i = 1;
     while (i <= nbBees) {
         var num = i;
-        var bee = new Bee(num); //create object and its IMG element
-        bee.display(); //display the bee
+        var bee = new Bee(i); //create object and its IMG element
         bees.push(bee); //add the bee object to the bees array
+        bee.display(); //display the bee
         i++;
     }
 }
@@ -194,7 +199,7 @@ function updateBees() { // update loop for game
     //update the timer for the next move
     updateTimer = setTimeout('updateBees()', periodTimer);
 
-    if (score >= 101) {
+    if (score >= 100) {
         updateTimer = clearTimeout('updateBees()', 0);
     }
     
@@ -219,8 +224,6 @@ function isHit(defender, offender) {
     if (score >= 101) {
         alert("Game ended, Click ok to restart");
         hits.innerHTML = 0;
-        bear.htmlElement.offsetLeft;
-        bear.htmlElement.offsetTop;
     }
 
     }
@@ -249,5 +252,7 @@ function overlap(element1, element2) {
 }
 
 function addBee() {
-
+    nbBees = nbBees + 1
+    bee = new Bee(1);
+    bees.push(bee);
 }
