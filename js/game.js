@@ -40,6 +40,7 @@ function setSpeed(){
 }
 
 function start() {
+    document.getElementById("hits").innerHTML = 0;
     //create bear
     bear = new Bear();
     // Add an event listener to the keypress event.
@@ -51,7 +52,10 @@ function start() {
 
     updateBees();
 
-    hits.innerHTML = 0;
+    lastStingTime = new Date();
+
+
+    
 }
 
    // Handle keyboad events
@@ -189,6 +193,10 @@ function updateBees() { // update loop for game
     let periodTimer = document.getElementById("periodTimer").value;//modify this to control refresh period
     //update the timer for the next move
     updateTimer = setTimeout('updateBees()', periodTimer);
+
+    if (score >= 101) {
+        updateTimer = clearTimeout('updateBees()', 0);
+    }
     
 }
 
@@ -197,10 +205,24 @@ function isHit(defender, offender) {
     let score = hits.innerHTML;
     score = Number(score) + 1; //increment the score
     hits.innerHTML = score; //display the new score
-    if (score >= 100) {
-        alert("Game ended");
-        start();
+    //calculate longest duration
+    let newStingTime = new Date();
+    let thisDuration = newStingTime - lastStingTime;
+    lastStingTime = newStingTime;
+    let longestDuration = Number(duration.innerHTML);
+    if (longestDuration === 0) {
+    longestDuration = thisDuration;
+    } else {
+    if (longestDuration < thisDuration) longestDuration = thisDuration;
     }
+    document.getElementById("duration").innerHTML = longestDuration;
+    if (score >= 101) {
+        alert("Game ended, Click ok to restart");
+        hits.innerHTML = 0;
+        bear.htmlElement.offsetLeft;
+        bear.htmlElement.offsetTop;
+    }
+
     }
    }
 function overlap(element1, element2) {
@@ -224,4 +246,8 @@ function overlap(element1, element2) {
     return false;
     }
     return true;
-}   
+}
+
+function addBee() {
+
+}
