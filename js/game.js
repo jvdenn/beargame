@@ -49,18 +49,10 @@ function start() {
     bees = new Array();
     //create bees
     makeBees();
-
+    //update position of bees
     updateBees();
-
+    //best sting duration
     lastStingTime = new Date();
-
-    if (score >= 100){
-        while(True) {
-        bees.pop();
-        }
-    }
-
-
     
 }
 
@@ -166,15 +158,16 @@ function makeBees() {
     let nbBees = document.getElementById("nbBees").value;
     nbBees = Number(nbBees); //try converting the content of the input to a number
     if (isNaN(nbBees)) { //check that the input field contains a valid number
-    alert("Invalid number of bees");
+    window.alert("Invalid number of bees");
+    return;
     }
     //create bees
     let i = 1;
     while (i <= nbBees) {
         var num = i;
-        var bee = new Bee(i); //create object and its IMG element
-        bees.push(bee); //add the bee object to the bees array
+        var bee = new Bee(num); //create object and its IMG element
         bee.display(); //display the bee
+        bees.push(bee); //add the bee object to the bees array
         i++;
     }
 }
@@ -198,10 +191,6 @@ function updateBees() { // update loop for game
     let periodTimer = document.getElementById("periodTimer").value;//modify this to control refresh period
     //update the timer for the next move
     updateTimer = setTimeout('updateBees()', periodTimer);
-
-    if (score >= 100) {
-        updateTimer = clearTimeout('updateBees()', 0);
-    }
     
 }
 
@@ -210,6 +199,11 @@ function isHit(defender, offender) {
     let score = hits.innerHTML;
     score = Number(score) + 1; //increment the score
     hits.innerHTML = score; //display the new score
+    if (score >= 101) {
+        alert("Game ended, Click ok to restart");
+        hits.innerHTML = 0;
+        window.location.reload();
+    }
     //calculate longest duration
     let newStingTime = new Date();
     let thisDuration = newStingTime - lastStingTime;
@@ -221,11 +215,6 @@ function isHit(defender, offender) {
     if (longestDuration < thisDuration) longestDuration = thisDuration;
     }
     document.getElementById("duration").innerHTML = longestDuration;
-    if (score >= 101) {
-        alert("Game ended, Click ok to restart");
-        hits.innerHTML = 0;
-    }
-
     }
    }
 function overlap(element1, element2) {
