@@ -53,8 +53,8 @@ function start() {
     updateBees();
     //best sting duration
     lastStingTime = new Date();
-    
-}
+    }
+
 
    // Handle keyboad events
 // to move the bear
@@ -199,9 +199,8 @@ function isHit(defender, offender) {
     let score = hits.innerHTML;
     score = Number(score) + 1; //increment the score
     hits.innerHTML = score; //display the new score
-    if (score >= 101) {
+    if (score >= 1001) {
         alert("Game ended, Click ok to restart");
-        hits.innerHTML = 0;
         window.location.reload();
     }
     //calculate longest duration
@@ -217,6 +216,7 @@ function isHit(defender, offender) {
     document.getElementById("duration").innerHTML = longestDuration;
     }
    }
+
 function overlap(element1, element2) {
  //consider the two rectangles wrapping the two elements
  //rectangle of the first element
@@ -241,7 +241,9 @@ function overlap(element1, element2) {
 }
 
 function addBee() {
-    nbBees = nbBees + 1
+    nbBees = parseInt(document.getElementById('nbBees').value);
+    nbBees++;
+    document.getElementById('nbBees').value = nbBees;
     bee = new Bee(1);
     bees.push(bee);
 }
